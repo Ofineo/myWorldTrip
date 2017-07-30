@@ -1,0 +1,85 @@
+﻿{
+  "dependencies": {
+    "Microsoft.NETCore.App": {
+      "version": "1.0.1",
+      //if we decide to make the project self contained we would comment out the following line. "type": "platform"
+      "type": "platform"
+    },
+    "Microsoft.AspNetCore.Diagnostics": "1.0.0",
+    "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0",
+    "Microsoft.AspNetCore.Server.Kestrel": "1.0.1",
+    "Microsoft.Extensions.Logging.Console": "1.0.0",
+    "Microsoft.AspNetCore.StaticFiles": "1.0.0",
+    "Microsoft.AspNetCore.Mvc": "1.0.0",
+    "Microsoft.AspNetCore.Mvc.TagHelpers": "1.0.0",
+    "Microsoft.Extensions.Configuration.Json": "1.0.0",
+    "Microsoft.EntityFrameworkCore": "1.0.1",
+    "Microsoft.EntityFrameworkCore.SqlServer": "1.0.0",
+    "Microsoft.EntityFrameworkCore.Tools": {
+      "type": "build",
+      "version": "1.0.0-preview3-final"
+    },
+    "Microsoft.EntityFrameworkCore.Design": {
+      "version": "1.0.1",
+      "type": "build"
+    },
+    "Microsoft.Extensions.Logging.Debug": "1.0.0",
+    "AutoMapper": "4.2.1",
+    "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.0.0"
+  },
+
+  "tools": {
+    "Microsoft.EntityFrameworkCore.Tools.DotNet": "1.0.0-preview3-final "
+  },
+  "Micosoft.EntityFrameworkCore.Tools": {
+    "version": "1.0.0-preview3-final",
+    "imports": [
+      "portable-net45+win8+dnxcore50",
+      "portable-net45+win8"
+    ]
+  },
+
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": [
+        "dotnet5.6",
+        "portable-net45+win8"
+      ]
+    }
+  },
+
+  "buildOptions": {
+    "emitEntryPoint": true,
+    "preserveCompilationContext": true
+  },
+
+  "runtimeOptions": {
+    "configProperties": {
+      "System.GC.Server": true
+    }
+  },
+
+  //this is to be able to make the project self contained so it can be run in any computer that
+  //is capable to run ont he specified machine ( in this case "win81-x64 but we can put any, linux, OS...)
+  //you dont need the type properties in dependencies at the top of the project.json
+  //we can publish it on command line (ALT+SPACEBAR) whitin the directory of the project typing the following:
+  //dotnet publish -o c:\...where you want the project published -r win81-x64
+  "runtimes": {
+    "win81-x64": {}
+  },
+
+  "publishOptions": {
+    "include": [
+      "wwwroot",
+      "web.config",
+      "Views",
+      "config.json"
+    ]
+  },
+
+  "scripts": {
+    "prepublish": [ "npn install", "bower" ],
+    "prepare": "gulp minify",
+    "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]
+  }
+}
